@@ -43,7 +43,7 @@ Observaciones preliminares del análisis exploratorio de datos (EDA):
   
   * **¿Qué variables parecen ser las más predictivas?**
     
-  En base al EDA anterior, considero que la variable predictiva más importante sería el tiempo de anticipación de la reserva (LeadTime), seguida de las variables categóricas y temporales. Sin embargo, este resumen se basa en los insights de la EDA y puede estar incompleto o no reflejar todos los aspectos del análisis. Se recomienda revisar el EDA completo para obtener una comprensión más detallada de los hallazgos y analizar la importancia de las variables en el modelo.
+  En base al EDA anterior, considero que la variable predictiva más importante sería el tiempo de anticipación de la reserva (`LeadTime`), seguida de las variables categóricas y temporales. Sin embargo, este resumen se basa en los insights de la EDA y puede estar incompleto o no reflejar todos los aspectos del análisis. Se recomienda revisar el EDA completo para obtener una comprensión más detallada de los hallazgos y analizar la importancia de las variables en el modelo.
 
 ## 2. **Preparación de los datos**
   * **¿Le darías el mismo tratamiento a todas las variables?**
