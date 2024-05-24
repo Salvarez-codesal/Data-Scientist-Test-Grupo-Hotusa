@@ -25,7 +25,8 @@ El dataset (**hotusa_cancellations.csv**) contiene las siguientes columnas:
 - *IsRepeatedGuest*: Cliente repetitivo
 - *IsCanceled*: Booleano que indica si la reserva se canceló o no (TARGET variable)
 
-Este documento contiene los siguientes puntos dentro del Jupiter Notebook (`Grupo Hotusa_Data Scientist test_Soraya Alvarez_final.ipynb`):
+Este documento contiene los resultados  puntos dentro del Jupiter Notebook (`Grupo Hotusa_Data Scientist test_Soraya Alvarez_final.ipynb`):
+
 ## 1. **EDA sencillo y básico** (A Revenue Management le preocupan más los resultados que los insights)
 
 Observaciones preliminares del análisis exploratorio de datos (EDA):
