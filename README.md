@@ -4,9 +4,10 @@ El director de Revenue Management nos comenta que las cancelaciones tienen un im
 
 El director quiere poner en marcha este modelo para poder realizar overbooking (llenar el hotel por encima del inventario total disponible con el objetivo de ocupar aquellas reservas que se van a cancelar). El hotel está en el centro de Lisboa y en la misma ciudad el grupo hotelero tiene varios hoteles, por lo que **no hay ningún riesgo en llenar el hotel más de la cuenta** y enviar el exceso de reservas a otros hoteles en la ciudad.
 
-## Descripción de la tarea
+## Objetivo principal:
+Predecir cancelacion (`IsCancelled`) de reservas de hotel usando ML e IA
 
-El dataset (**hotusa_cancellations.csv**) con el que trabajar contiene las siguientes columnas:
+El dataset (**hotusa_cancellations.csv**) contiene las siguientes columnas:
 - *HotelId*: Id del hotel
 - *ReservationStatusDate*: Fecha en la que se realizó la reserva
 - *ArrivalDate*: Fecha de inicio de la reserva
@@ -31,17 +32,18 @@ Observaciones preliminares del análisis exploratorio de datos (EDA):
 
 - Tipo de cliente: Mayor tasa de cancelación en "Transient" (16.2%) y "Transient-party" (9.3%).
 - Tipo de alojamiento: Mayor tasa de cancelación en FB (Full Board: 36.8%) y HB (Half Board: 16.7%). Sin embargo, más cancelaciones totales en BB (3343) y HB (1102).
-- País de origen: Mayor número de cancelaciones de Portugal (67%), seguido de Reino Unido (7.7%), España (7.7%) e Irlanda (4%). Mayor porcentaje de cancelaciones de Georgia, Moldavia, ARE y Pakistán (50%).
+- País de origen: Por pais (Country), los clientes con el mayor numero de cancelaciones son los procedentes de Portugal (67% de las cancelaciones totales), seguidos de Reino Unido y Espana (7.7%) e Irlanda (4%), aunque estos paises son los que cuentan con mayores reservas en el hotel. Por otro lado, cuando tenemos en cuenta los porcentajes por pais de origen, la mayor proporcion de cancelaciones son las de clientes de Georgia, Moldavia, ARE, y Pakistan (50%).
 - Tipo de habitación: Mayor tasa de cancelación en "H" (26%), "G" (23%) y "L" (20%). Sin embargo, más cancelaciones totales en A (2743), D (800) y E (610).
 - Huésped habitual: Menor tasa de cancelación para clientes frecuentes (3.3%) vs. nuevos clientes (14.7%).
 - Lead Time (tiempo de antelación): Mayor correlación con la cancelación. Las reservas con mucha antelación tienen más probabilidades de cancelarse.
 - Precio medio por habitación (ADR): Tendencia positiva con la cancelación, pero no hay diferencia estadísticamente significativa con las reservas no canceladas.
 - Días de estancia: Aumenta la tasa de cancelación con el número de días, tanto en semana como en fin de semana. Sin embargo, más cancelaciones totales en estancias de 5 días entre semana, 2 días fin de semana, 2 adultos y sin niños.
 - Variables temporales: Patrones dinámicos con la cancelación. Se recomienda analizar mes y año para identificar meses con mayor tasa de cancelación.
-   
+
+  
   * **¿Qué variables parecen ser las más predictivas?**
     
-  En base al EDA anterior, considero que la variable predictiva mas importante seria el tiempo de anticipacion de la reserva (LeadTime), seguida de las variables categoricas y temporales. Sin embargo, este resumen se basa en los insights de la EDA y puede estar incompleto o no reflejar todos los aspectos del análisis. Se recomienda revisar el EDA completo para obtener una comprensión más detallada de los hallazgos y analizar la importancia de las variables en el modelo.
+  En base al EDA anterior, considero que la variable predictiva más importante sería el tiempo de anticipación de la reserva (LeadTime), seguida de las variables categóricas y temporales. Sin embargo, este resumen se basa en los insights de la EDA y puede estar incompleto o no reflejar todos los aspectos del análisis. Se recomienda revisar el EDA completo para obtener una comprensión más detallada de los hallazgos y analizar la importancia de las variables en el modelo.
 
 2. **Preparación de los datos**
   * **¿Le darías el mismo tratamiento a todas las variables?**
@@ -67,3 +69,26 @@ Observaciones preliminares del análisis exploratorio de datos (EDA):
     - Los riesgos de este modelo son los siguientes (basado en los datos de confusion matrix):
         - 3% de posibilidades de que el hotel prediga que no se cancela una reserva, y finalmente la reserva saldrá mal (reserva cancelada).
         - 2% de posibilidades de que el hotel no prediga/sospeche que la reserva se cancelara, y finalmente no se cancela, con el riesgo de overbooking. En estos casos, este % de reservas sera facilmente asumible por otros hoteles del mismo grupo en la ciudad de Lisboa.
+
+
+## Conclusiones generales:
+
+* El modelo XGBoost, con una precisión del 97% y un AUC ROC de 0.89, es una herramienta robusta para predecir cancelaciones de reservas en el hotel.
+* Basado en la Importancia de las Características del modelo XGBOOST, las variables principales que afectan a que las reservas se cancelen o no son: el origen del huésped, tipo de cliente, el mes en el que se hace la reserva y de llegada del cliente y el año en el que se hizo la reserva.
+* Se recomienda utilizar el modelo para realizar overbooking preciso y reducir las cancelaciones efectivas, lo que puede aumentar los ingresos del hotel.
+
+* **Recomendaciones**:
+   - 1. **Optimización de Estrategias de Overbooking**:
+Utilizar el modelo para predecir cancelaciones y ajustar las políticas de overbooking, asegurando que el hotel maximice su ocupación y transfiriendo cliente al resto de hoteles del grupo en Lisboa si fuera necesario.
+
+   - 2. **Segmentación de Clientes**:
+Desarrollar estrategias de fidelización para clientes frecuentes, quienes muestran menores tasas de cancelación, y crear incentivos para reducir cancelaciones entre nuevos clientes.
+
+   - 3. **Análisis Temporal**:
+Realizar un análisis detallado de los patrones de cancelación por mes y año para identificar períodos de alta cancelación y ajustar las estrategias de marketing y reservas en consecuencia.
+
+   - 4. **Revisión Continua del Modelo**:
+Continuar monitoreando el rendimiento del modelo en producción y ajustar según sea necesario para mitigar posibles problemas de overfitting y asegurar su efectividad a largo plazo.
+
+   - 5. **Mejora en la Gestión de Reservas**:
+Implementar alertas tempranas para reservas con alta probabilidad de cancelación basada en el tiempo de antelación y otros factores identificados, permitiendo una gestión proactiva de las reservas.
