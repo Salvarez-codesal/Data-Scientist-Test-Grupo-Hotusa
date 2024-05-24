@@ -26,7 +26,7 @@ El dataset (**hotusa_cancellations.csv**) contiene las siguientes columnas:
 - *IsCanceled*: Booleano que indica si la reserva se canceló o no (TARGET variable)
 
 Este documento contiene los siguientes puntos dentro del Jupiter Notebook (`Grupo Hotusa_Data Scientist test_Soraya Alvarez_final.ipynb`):
-1. **EDA sencillo y básico** (A Revenue Management le preocupan más los resultados que los insights)
+## 1. **EDA sencillo y básico** (A Revenue Management le preocupan más los resultados que los insights)
 
 Observaciones preliminares del análisis exploratorio de datos (EDA):
 
@@ -45,21 +45,21 @@ Observaciones preliminares del análisis exploratorio de datos (EDA):
     
   En base al EDA anterior, considero que la variable predictiva más importante sería el tiempo de anticipación de la reserva (LeadTime), seguida de las variables categóricas y temporales. Sin embargo, este resumen se basa en los insights de la EDA y puede estar incompleto o no reflejar todos los aspectos del análisis. Se recomienda revisar el EDA completo para obtener una comprensión más detallada de los hallazgos y analizar la importancia de las variables en el modelo.
 
-2. **Preparación de los datos**
+## 2. **Preparación de los datos**
   * **¿Le darías el mismo tratamiento a todas las variables?**
     No le daría el mismo tratamiento a todas las variables. Las variables categóricas necesitan ser transformadas en variables ficticias (dummies), y algunas de las variables numéricas podrían tratarse como variables categóricas, por lo que también tendríamos que convertirlas en variables dummies. Las variables numéricas deberíamos normalizarlas utilizando métodos como el logaritmo neperiano u otros métodos similares, para mejorar el rendimiento del modelo. Por ultimo, las variables con fechas, no podemos utilizarlas directamente, sino que las transformaremos en características (features) numéricas que el modelo pueda entender.
   
   * **¿Utilizarías todas las variables o eliminarías alguna de ellas por no ofrecer valor?**
   Para mejorar el modelo y evitar problemas como la multicolinealidad, se propone eliminar las variables Unnamed: 0 (código de cliente), HotelId (innecesario al haber un solo hotel), StaysInWeekNights (se agrupa con StaysInWeekendNights en total_stays), Adults y Children (se agrupan en Total_guests), Company (clasificada como 0 o 1 según si la reserva la hizo una empresa). Las variables temporales ReservationStatusDate y ArrivalDate se transforman en dos variables cada una, representando el mes y el año de la fecha. Country se agrupa en nacionales (portugueses) e internacionales. Se conservan las demás variables para mantener un modelo lo más completo posible. La decisión final sobre la eliminación de variables puede revisarse en el Jupiter Notebook, y después de evaluar la precisión y otras métricas del modelo.
 
-3. **Construcción del modelo**
+## 3. **Construcción del modelo**
   * **¿Qué tipo de modelo es el más adiente? Support Vector Machines, Decision Tree, Logistic Regression, K-Means, Redes Neuronales, Random Forest, Gradient Boosting, Naive Bayes, PCA, Lasso Regression...**
     
   Se seleccionó XGBoost por su robustez a clases desbalanceadas (cancelaciones representan el 14%), capacidad para manejar variables mixtas y proporcionar interpretabilidad.
   
   * No es necesario probar entre cientos de modelos con distintos hiperparámetros para saber cuál da mejores resultados, basta con justificar la elección.
   
-4. **Evaluación del modelo**
+## 4. **Evaluación del modelo**
   * **¿Cuál sería el benchmark a batir? ¿Estamos contentos con los resultados obtenidos?**
   El benchmark a batir es un modelo con una precisión y una AUC ROC superiores a 0.5 indican que el modelo es mejor que el azar. En nuestro caso obtuvimos una accuracy del 97% en los datos de prueba y una ROC AUC de 0.89. Aunque hay una leve tendencia al overfitting, esta discrepancia es aceptable y no representa una preocupación significativa. Es importante seguir monitoreando el modelo para detectar posibles problemas de overfitting a medida que se ajusta y se aplican técnicas adicionales de validación. Por ello, si estoy contenta con los resultados obtenidos.
     
